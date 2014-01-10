@@ -1,4 +1,5 @@
-__author__ = 'kmadac'
+#!/usr/bin/env python3
+__author__ = 'kmadac, choperlizer'
 
 import requests
 import time
@@ -45,15 +46,16 @@ class public():
         else:
             r.raise_for_status()
 
-    def bitinstant_reserves(self):
-        """
-        Returns simple dictionary {'usd': 'Bitinstant USD reserves'}
-        """
-        r = requests.get("https://www.bitstamp.net/api/bitinstant/", proxies=self.proxydict)
-        if r.status_code == 200:
-            return r.json()
-        else:
-            r.raise_for_status()
+    # def bitinstant_reserves(self):
+    #     """
+    #     !REMOVED! Returns simple dictionary {'usd': 'Bitinstant USD reserves'}
+    #     info: http://web.archive.org/web/20120503004912/https://www.bitinstant.com/
+    #     """
+    #     r = requests.get("https://www.bitstamp.net/api/bitinstant/", proxies=self.proxydict)
+    #     if r.status_code == 200:
+    #         return r.json()
+    #     else:
+    #         r.raise_for_status()
 
     def conversion_rate_usd_eur(self):
         """
@@ -92,14 +94,14 @@ class trading():
 
     def account_balance(self):
         """
-        Returns dictionary:
-        {u'btc_reserved': u'0',
-         u'fee': u'0.5000',
-         u'btc_available': u'2.30856098',
-         u'usd_reserved': u'0',
-         u'btc_balance': u'2.30856098',
-         u'usd_balance': u'114.64',
-         u'usd_available': u'114.64'}
+        Returns dictionary: {
+        'btc_reserved': '0',
+        'fee': '0.5000',
+        'btc_available': '2.30856098',
+        'usd_reserved': '0',
+        'btc_balance': '2.30856098',
+        'usd_balance': '114.64',
+        'usd_available': '114.64'}
         """
         params = self.get_params()
         r = requests.post("https://www.bitstamp.net/api/balance/", data=params, proxies=self.proxydict)
@@ -114,11 +116,12 @@ class trading():
     def user_transactions(self, offset=0, limit=100, descending=True):
         """
         Returns descending list of transactions. Every transaction (dictionary) contains
-        {u'usd': u'-39.25',
-         u'datetime': u'2013-03-26 18:49:13',
-         u'fee': u'0.20', u'btc': u'0.50000000',
-         u'type': 2,
-         u'id': 213642}
+        {'usd': '-39.25',
+         'datetime': '2013-03-26 18:49:13',
+         'fee': '0.20',
+         'btc': '0.50000000',
+         'type': 2,
+         'id': 213642}
         """
         params = self.get_params()
         params['offset'] = offset
